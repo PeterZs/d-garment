@@ -125,6 +125,15 @@ py training.py ../configs/config.json
 
 ## Generate evaluation and ablations
 
+### Make the predictions
+
+To run the ablations, first copy the vae model to the ablations folders:
+```sh
+cp -r models/D-garment/vae models/ablation_motion/vae
+cp -r models/D-garment/vae models/ablation_material/vae
+```
+
+To run the model and the ablations:
 ```sh
 py generate_evaluation.py ../configs/config.json ${EXP_DATA}/dgarment/
 py generate_evaluation.py ../configs/ablation_material.json ${EXP_DATA}/ABLATION/ablation_material/
@@ -133,15 +142,7 @@ py generate_evaluation.py ../configs/config.json ${EXP_DATA}/ABLATION/dgarment_s
 py generate_evaluation.py ../configs/ablation_5_poses.json ${EXP_DATA}/ABLATION/ablation_5_poses/
 ```
 
-### Make the predictions
-
-First copy the vae model to the ablations folders:
-```sh
-cp -r models/D-garment/vae models/ablation_motion/vae
-cp -r models/D-garment/vae models/ablation_material/vae
-```
-
-Then to run the model and the ablations:
+To compute metrics (they will be saved in json files):
 ```sh
 py metrics.py ../configs/config.json ${EXP_DATA}/dgarment/ ${DATASET}/Cos5kZero.obj &
 py metrics.py ../configs/config.json ${EXP_DATA}/ABLATION/ablation_motion/ ${DATASET}/Cos5kZero.obj --post_process &
@@ -150,7 +151,7 @@ py metrics.py ../configs/config.json ${EXP_DATA}/ABLATION/dgarment_subdivision/ 
 py metrics.py ../configs/ablation_5_poses.json ${EXP_DATA}/ABLATION/ablation_5_poses/ ${DATASET}/Cos5kZero.obj --post_process 
 ```
 
-To generate the table in latex:
+To generate the latex table:
 ```sh
 py latex_table.py ${EXP_DATA}/ABLATION
 ```
@@ -169,7 +170,7 @@ Video sequences:
 
 ### Diffusion steps
 
-We only present results with 20 steps in the paper, you can easily compare and analyse the effect of the number of diffusion step with the `--step` argument here:
+We only present results with 20 steps in the paper, you can easily compare and analyse the effect of the number of diffusion step with the `--step` argument:
 ```sh
 py generate_evaluation.py ../configs/config.json ${EXP_DATA}/DIFFUSION_STEPS/dgarment_5steps/ --step 5
 py generate_evaluation.py ../configs/config.json ${EXP_DATA}/DIFFUSION_STEPS/dgarment_8steps/ --step 8
